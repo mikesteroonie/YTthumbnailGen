@@ -4,8 +4,17 @@ function onSubmit(e) {
 
     e.preventDefault();
 
+    //this removes the message after generating our image. This is the first thing that happens onSubmit.
+    document.querySelector('.msg').textContent = '';
+    document.querySelector('#image').src = '';
+
+
     //getting id of prompt, and then it's value. 
-    const prompt = document.querySelector('#prompt').value;
+    const string = "a youtube thumbnail of a video where ";
+    const string2 = document.querySelector('#prompt').value;
+    const prompt = string + string2;
+    //making sure that the api knows it is for a youtube thumbnail
+    console.log(prompt);
     const size = document.querySelector('#size').value;
 
     if(prompt === ''){
@@ -47,8 +56,11 @@ async function generateImageRequest(prompt,size){
         }
         //if no problem, then...
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
         //after getting data we need to remove spinner as well
+
+        const imageUrl = data.data;
+        document.querySelector('#image').src = imageUrl;
 
         removeSpinner();
         
